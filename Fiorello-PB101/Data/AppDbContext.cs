@@ -16,6 +16,7 @@ namespace Fiorello_PB101.Data
         public DbSet<FooterLink> FooterLinks { get; set; }
         public DbSet<ContactInfo> ContactInfos { get; set; }
         public DbSet<LinkItem> LinkItems { get; set; }
+        public DbSet<Setting> Settings { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,32 +30,32 @@ namespace Fiorello_PB101.Data
             modelBuilder.Entity<LinkItem>().HasQueryFilter(m => !m.SofDeleted);
 
 
-            modelBuilder.Entity<Blog>().HasData
+            modelBuilder.Entity<Setting>().HasData
                 (
-                new Blog
+                new Setting
                 {
                     Id = 1,
-                    Title = "Title1",
-                    Description = "Reshadin blogu",
-                    Image = "blog-feature-img-1.jpg",
+                    Key = "Header logo",
+                    Value = "logo.png",
+                    SofDeleted = false,
                     CreatedDate = DateTime.Now,
 
                 },
-                new Blog
+                new Setting
                 {
                     Id = 2,
-                    Title = "Title2",
-                    Description = "Ilqarin blogu",
-                    Image = "blog-feature-img-3.jpg",
+                    Key="Phone",
+                    Value="3456688",
+                    SofDeleted=false,
                     CreatedDate = DateTime.Now,
 
                 },
-                new Blog
+                new Setting
                 {
                     Id = 3,
-                    Title = "Title3",
-                    Description = "Hacixanin blogu",
-                    Image = "blog-feature-img-4.jpg",
+                    Key = "Address",
+                    Value = "Ehmedli",
+                    SofDeleted = false,
                     CreatedDate = DateTime.Now,
 
                 }

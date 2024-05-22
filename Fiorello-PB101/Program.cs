@@ -17,6 +17,7 @@ builder.Services.AddScoped<IBlogService,BlogService>();
 builder.Services.AddScoped<ICategoryService,CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IFooterService,FooterService>();
+builder.Services.AddScoped<ISettingService,SettingService>();
 
 var app = builder.Build();
 

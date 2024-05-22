@@ -41,25 +41,31 @@ namespace Fiorello_PB101.Areas.Admin.Controllers
                 return View();
             }
 
-            if (!request.Image.CheckFileType("image/"))
+            foreach (var item in request.Images)
             {
-                ModelState.AddModelError("Image", " input can accept only image format");
-                return View();
+                if (!item.CheckFileType("image/"))
+                {
+                    ModelState.AddModelError("Image", " input can accept only image format");
+                    return View();
+                }
+                if (!item.CheckFileSize(200))
+                {
+                    ModelState.AddModelError("Image", " Image size must be max 200kb ");
+                    return View();
+                }
             }
-            if (!request.Image.CheckFileSize(200))
+
+            foreach (var item in request.Images)
             {
-                ModelState.AddModelError("Image", " Image size must be max 200kb ");
-                return View();
+                string fileName = Guid.NewGuid().ToString() + "-" + item.FileName;
+
+                string path = _env.GenerateFilePath("img", fileName);
+                await item.SaveFileLocalAsync(path);
+
+                await _context.Sliders.AddAsync(new Models.Slider { Image = fileName });
+                await _context.SaveChangesAsync();
+
             }
-
-            string fileName = Guid.NewGuid().ToString() + "-" + request.Image.FileName;
-
-            string path = _env.GenerateFilePath("img", fileName);
-            await request.Image.SaveFileLocalAsync(path);
-            
-            await _context.Sliders.AddAsync(new Models.Slider {Image= fileName});
-            await _context.SaveChangesAsync();
-
 
 
             return RedirectToAction(nameof(Index));

@@ -29,8 +29,7 @@ namespace Fiorello_PB101.Controllers
         {
             HomeVM model = new ()
             {
-                Sliders = await _sliderService.GetAllAsync(),
-                SliderInfo= await _sliderService.GetSliderInfoAsync(),
+                
                 Blogs= await _blogService.GetAllAsync(3),
                 Categories=await _categoryService.GetAllAsync(),
                 Products= await _productService.GetProductsAsync()
